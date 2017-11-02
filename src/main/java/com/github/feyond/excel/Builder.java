@@ -115,8 +115,13 @@ public class Builder {
         ((SXSSFSheet)sheet).trackAllColumnsForAutoSizing();
         Iterables.forEach(headerList, (column, header) -> {
             sheet.autoSizeColumn(column, true);
-            int colWidth = sheet.getColumnWidth(column) * 2;
-            sheet.setColumnWidth(column, colWidth < 3000 ? 3000 : colWidth);
+            int colWidth = sheet.getColumnWidth(column) * 6/5;
+            if(colWidth > 24000) {
+                sheet.setColumnWidth(column,24000);
+            } else {
+                sheet.setColumnWidth(column, colWidth < 3000 ? 3000 : colWidth);
+            }
+
         });
     }
 }

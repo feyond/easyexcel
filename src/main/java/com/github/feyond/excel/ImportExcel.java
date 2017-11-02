@@ -29,9 +29,9 @@ public class ImportExcel {
             throw new RuntimeException("导入文档为空!");
         } else if (!file.isFile() || !file.canRead()) {
             throw new RuntimeException("导入文档不可读!");
-        } else if (StringUtils.endsWithIgnoreCase(file.getName(), "xls")) {
+        } else if (StringUtils.endsWithIgnoreCase(file.getName(), ExcelConstants.XLS_SUFFIX)) {
             this.wb = new HSSFWorkbook(new FileInputStream(file));
-        } else if (StringUtils.endsWithIgnoreCase(file.getName(), "xlsx")) {
+        } else if (StringUtils.endsWithIgnoreCase(file.getName(), ExcelConstants.XLSX_SUFFIX)) {
             this.wb = new XSSFWorkbook(new FileInputStream(file));
         } else {
             throw new RuntimeException("文档格式不正确!");

@@ -4,8 +4,9 @@
 
     <groupId>com.github.feyond</groupId>
     <artifactId>easy-excel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1</version>
     <build>
+        <finalName>easy-excel</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -21,6 +22,18 @@
 
     <name>easy-excel</name>
     <url>http://maven.apache.org</url>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Release Repository</name>
+            <url>http://www.xmylsw.com/nexus/content/repositories/releases/</url>
+        </repository>
+        <!--<snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>http://www.xmylsw.com/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>-->
+    </distributionManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,6 +52,12 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
