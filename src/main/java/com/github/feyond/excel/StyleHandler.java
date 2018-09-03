@@ -129,8 +129,9 @@ public class StyleHandler {
     }
 
     public CellStyle getDataStyle(String format, Class aClass, int align, int rowNum, Integer column) {
-        if (null == aClass)
+        if (null == aClass) {
             return nullStyle(wb, format, align);
+        }
         CellStyle style = styles.get("data_column_" + column);
         if (style == null) {
             String realFormat = StringUtils.isBlank(format) ? (StringUtils.isBlank(ALL_TYPE_FORMAT_MAP.get(aClass)) ? "@" : ALL_TYPE_FORMAT_MAP.get(aClass)) : format;

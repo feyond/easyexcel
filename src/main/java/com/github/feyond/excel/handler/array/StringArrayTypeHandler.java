@@ -20,6 +20,6 @@ public class StringArrayTypeHandler extends BaseTypeHandler<String[]> {
 
     @Override
     public Cell getCell(String[] val, CellStyle style, Row row, Integer column) {
-        return Builder.createCell(row, column, style, new StringUtils().join(val, DEFAULT_SPLIT_SEPARATOR));
+        return Builder.createCell(row, column, style, StringUtils.join(val, DEFAULT_SPLIT_SEPARATOR));
     }
 }

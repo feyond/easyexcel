@@ -138,10 +138,11 @@ public class TypeHandlerRegistry {
         boolean isCollection = Collection.class.isAssignableFrom(fw.getType());
         TypeHandler returned = null;
         if(!DefaultTypeHandler.class.isAssignableFrom(fw.getExcelField().hanlder())) {
-            if(isCollection)
+            if(isCollection) {
                 registerCollection(fw.getRawType(), fw.getExcelField().hanlder());
-            else
+            } else {
                 register(fw.getType(), fw.getExcelField().hanlder());
+            }
         }
         if (isCollection) {
             returned = getCollectionTypeHandler(fw.getRawType());
@@ -153,8 +154,9 @@ public class TypeHandlerRegistry {
     }
 
     public TypeHandler getTypeHandlerByVal(Object val, Integer column) {
-        if (null == val)
+        if (null == val) {
             return defaultHandler();
+        }
         if(CACHE_COLUMN_HANDLERS_MAP.containsKey(column)) {
             return CACHE_COLUMN_HANDLERS_MAP.get(column);
         }

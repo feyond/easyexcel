@@ -59,6 +59,7 @@ public class AnnotationSheetWrapper extends SheetWrapper {
         }
         // Field sorting
         Collections.sort(fieldAnnotationList, new Comparator<FieldWrapper>() {
+            @Override
             public int compare(FieldWrapper f1, FieldWrapper f2) {
                 return new Integer(f1.getExcelField().sort()).compareTo(new Integer(f2.getExcelField().sort()));
             }
