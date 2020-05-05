@@ -42,8 +42,8 @@ public class ImportExcel {
         this(new File(filepath));
     }
 
-    public <E> List<E> getDataList(int sheetIndex, int dataRow, Class<E> cls, int... groups) {
-        AnnotationSheetWrapper sheetWrapper = new AnnotationSheetWrapper(this, sheetIndex);
+    public <E> List<E> getDataList(int sheetIndex, int dataRow, boolean readMergedCell, Class<E> cls, int... groups) {
+        AnnotationSheetWrapper sheetWrapper = new AnnotationSheetWrapper(this, sheetIndex, readMergedCell);
         return sheetWrapper.getDataList(dataRow, cls, groups);
     }
 

@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -106,8 +108,8 @@ public class AnnotationSheetWrapper extends SheetWrapper {
 
 
     /* 读取excel */
-    public AnnotationSheetWrapper(ImportExcel importExcel, int sheetIndex) {
-        super(importExcel, sheetIndex);
+    public AnnotationSheetWrapper(ImportExcel importExcel, int sheetIndex, boolean readMergedCell) {
+        super(importExcel, sheetIndex, readMergedCell);
     }
 
     public <E> List<E> getDataList(int dataRow, Class<E> cls, int... groups) {
@@ -121,7 +123,16 @@ public class AnnotationSheetWrapper extends SheetWrapper {
                 Iterables.forEach(this.fieldAnnotationList, (column, fw) -> {
                     TypeHandler handler = typeHandlerRegistry.getTypeHandler(fw, column);
                     log.debug("read column[{}], handler:{}...", column, handler.getClass().getSimpleName());
-                    Object val = handler.getValueObject(row.getCell(column));
+                    Cell cell = row.getCell(column, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                    if (super.readMergedCell) {
+                        final CellRangeAddress mergedRegion = getMergedRegion(cell.getRowIndex(), cell.getColumnIndex());
+                        if (mergedRegion != null && !(mergedRegion.getFirstColumn() == cell.getColumnIndex() && mergedRegion.getFirstRow() == cell.getRowIndex())) {
+                            Row firstRow = sheet.getRow(mergedRegion.getFirstRow());
+                            cell = firstRow.getCell(mergedRegion.getFirstColumn());
+                        }
+                    }
+
+                    Object val = handler.getValueObject(cell);
                     if (val != null && fw.getField() != null) {
                         if (fw.getField().isAccessible()) {
                             ReflectionHelper.setField(fw.getField(), e, val);
@@ -139,6 +150,23 @@ public class AnnotationSheetWrapper extends SheetWrapper {
             throw new RuntimeException("文档导入异常", e);
         }
         return dataList;
+    }
+
+    private CellRangeAddress getMergedRegion(int row, int column) {
+        int sheetMergeCount = sheet.getNumMergedRegions();
+        for (int i = 0; i < sheetMergeCount; i++) {
+            CellRangeAddress range = sheet.getMergedRegion(i);
+            int firstColumn = range.getFirstColumn();
+            int lastColumn = range.getLastColumn();
+            int firstRow = range.getFirstRow();
+            int lastRow = range.getLastRow();
+            if (row >= firstRow && row <= lastRow) {
+                if (column >= firstColumn && column <= lastColumn) {
+                    return range;
+                }
+            }
+        }
+        return null;
     }
 
 }

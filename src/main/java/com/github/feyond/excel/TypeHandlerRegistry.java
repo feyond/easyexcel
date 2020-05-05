@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -42,6 +43,7 @@ public class TypeHandlerRegistry {
         register(double.class, new DoubleTypeHandler());
         register(String.class, new StringTypeHandler());
         register(Date.class, new DateTypeHandler());
+        register(LocalDateTime.class, new LocalDateTimeTypeHandler());
 
         register(Object[].class, new ObjectArrayTypeHandler());
         register(Byte[].class, new ByteArrayTypeHandler());

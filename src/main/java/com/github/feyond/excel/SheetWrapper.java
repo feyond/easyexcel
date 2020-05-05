@@ -19,6 +19,7 @@ public class SheetWrapper {
 
     /* 导出Excel */
     protected static final String DEFAULT_SHEET_NAME = "Export";
+    protected boolean readMergedCell;
     protected Sheet sheet;
     private ExportExcel export;
     protected TypeHandlerRegistry typeHandlerRegistry;
@@ -117,9 +118,14 @@ public class SheetWrapper {
     protected FormulaEvaluator evaluator;
 
     public SheetWrapper(ImportExcel importExcel, int sheetIndex) {
+        this(importExcel, sheetIndex, false);
+    }
+
+    public SheetWrapper(ImportExcel importExcel, int sheetIndex, boolean readMergedCell) {
         this.typeHandlerRegistry = new TypeHandlerRegistry();
         this.sheet = importExcel.getWb().getSheetAt(sheetIndex);
         this.evaluator = importExcel.getWb().getCreationHelper().createFormulaEvaluator();
+        this.readMergedCell = readMergedCell;
     }
 
     public List<Map<Integer,Object>> getDataList(int dataRow) {
