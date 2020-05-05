@@ -56,4 +56,9 @@ public class ImportExcel {
         SheetWrapper sheet = new SheetWrapper(this, sheetIndex);
         return sheet.getDataListWithHeader(headerRow);
     }
+
+    public List<String> getHeaders(int sheetIndex, int headerRowIndex) {
+        AnnotationSheetWrapper sheetWrapper = new AnnotationSheetWrapper(this, sheetIndex, false);
+        return sheetWrapper.getHeaders(headerRowIndex);
+    }
 }

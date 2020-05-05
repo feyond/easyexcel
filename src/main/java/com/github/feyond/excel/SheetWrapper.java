@@ -163,4 +163,13 @@ public class SheetWrapper {
         }
         return dataList;
     }
+
+    public List<String> getHeaders(int headerRowIndex) {
+        Row headerRow = sheet.getRow(headerRowIndex);
+        List<String> headers = new ArrayList<>();
+        headerRow.forEach(cell -> {
+            headers.add(cell.getStringCellValue());
+        });
+        return headers;
+    }
 }

@@ -25,7 +25,10 @@ public class ImportTests {
 //        System.out.println(new ImportExcel("X:\\home\\2.xlsx")
 //                .getDataListWithHeader(2, 1));
 
-        final List<A> dataList = new ImportExcel("/usr/local/var/www/qten/temp/b13506363b57eaa411d21eac9ec4261b.xls")
+        final ImportExcel importExcel = new ImportExcel("/usr/local/var/www/qten/temp/b13506363b57eaa411d21eac9ec4261b.xls");
+        List<String> headers = importExcel.getHeaders(0, 0);
+        System.out.println(headers);
+        final List<A> dataList = importExcel
                 .getDataList(0, 1, true, A.class);
         System.out.println(dataList);
 //        System.out.println(new ImportExcel("X:\\home\\2.xlsx").getDataList(3,2, A.class, 1));
