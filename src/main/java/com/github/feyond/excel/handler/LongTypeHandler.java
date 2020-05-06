@@ -13,7 +13,20 @@ import org.apache.poi.ss.usermodel.Row;
 public class LongTypeHandler extends BaseTypeHandler<Long> {
     @Override
     public Long getValueObject(Cell cell) {
-        return (long) Math.floor(cell.getNumericCellValue());
+        Long value;
+        switch (cell.getCellTypeEnum()) {
+            case STRING:
+                value = Long.parseLong(cell.getStringCellValue());
+                break;
+            case NUMERIC:
+                value = (long) Math.floor(cell.getNumericCellValue());
+                break;
+            default:
+                value = null;
+                break;
+
+        }
+        return value;
     }
 
     @Override

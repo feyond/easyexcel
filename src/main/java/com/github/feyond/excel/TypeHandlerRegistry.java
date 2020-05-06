@@ -68,15 +68,11 @@ public class TypeHandlerRegistry {
     }
 
     public void registerCollection(Class<?> clasz, TypeHandler typeHandler) {
-        if (!COLLECTION_TYPE_HANDLERS_MAP.containsKey(clasz)) {
-            COLLECTION_TYPE_HANDLERS_MAP.put(clasz, typeHandler);
-        }
+        COLLECTION_TYPE_HANDLERS_MAP.put(clasz, typeHandler);
     }
     public void registerCollection(Class<?> type, Class<? extends TypeHandler> typeHandler) {
         try {
-            if (!COLLECTION_TYPE_HANDLERS_MAP.containsKey(type)) {
-                COLLECTION_TYPE_HANDLERS_MAP.put(type, typeHandler.newInstance());
-            }
+            COLLECTION_TYPE_HANDLERS_MAP.put(type, typeHandler.newInstance());
         } catch (Exception e) {
             log.error("注册Handler异常", e);
             throw new RuntimeException(e);
@@ -85,9 +81,7 @@ public class TypeHandlerRegistry {
 
     public void register(Class<?> type, Class<? extends TypeHandler> hanlder) {
         try {
-            if (!ALL_TYPE_HANDLERS_MAP.containsKey(type)) {
-                ALL_TYPE_HANDLERS_MAP.put(type, hanlder.newInstance());
-            }
+            ALL_TYPE_HANDLERS_MAP.put(type, hanlder.newInstance());
         } catch (Exception e) {
             log.error("注册Handler异常", e);
             throw new RuntimeException(e);

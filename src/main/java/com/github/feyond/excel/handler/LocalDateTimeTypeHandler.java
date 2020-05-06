@@ -20,8 +20,18 @@ public class LocalDateTimeTypeHandler extends BaseTypeHandler<LocalDateTime> {
     final ZoneId zoneId = ZoneId.systemDefault();
     @Override
     public LocalDateTime getValueObject(Cell cell) {
-        final Date date = cell.getDateCellValue();
-        return LocalDateTime.ofInstant(date.toInstant(), zoneId);
+        LocalDateTime value;
+        switch (cell.getCellTypeEnum()) {
+            case NUMERIC:
+                final Date date = cell.getDateCellValue();
+                value = LocalDateTime.ofInstant(date.toInstant(), zoneId);
+                break;
+            default:
+                value = null;
+                break;
+        }
+
+        return value;
     }
 
     @Override
